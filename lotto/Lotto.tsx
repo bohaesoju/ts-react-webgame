@@ -1,8 +1,8 @@
 import * as React from 'react';
+import Ball from './Ball';
 const { useState, useEffect, useMemo, useRef, useCallback } = React;
 
 const getWinNumbers = () => {
-    console.log('getWinNumberts!');
     const candidate: number[] = Array(45).fill(null).map((v, i) => i + 1);
     const shuffle: number[] = [];
     while(candidate.length > 0){
@@ -44,8 +44,6 @@ const Lotto = () => {
     }, [winNumbers]);
 
     const onClickRedo = useCallback((): void => {
-        console.log('onClickRedo');
-        console.log(winNumbers);
         setWinNumbers(getWinNumbers());
         setWinBalls([]);
         setBonus(null);
@@ -57,8 +55,11 @@ const Lotto = () => {
         <>
             <div>당첨 숫자</div>
                 <div id="numbers">
-                    
+                    {winBalls.map((v) => <Ball key={v} number={v} />)}
                 </div>
+                <div>보너스!</div>
+                {bonus && <Ball number={bonus} />}
+                {redo && <button onClick={ onClickRedo }>한번더!</button>}
         </>
     )
 }
